@@ -192,7 +192,7 @@ class DockerRuntime(ActionExecutionClient):
             self._find_available_port(APP_PORT_RANGE_1),
             self._find_available_port(APP_PORT_RANGE_2),
         ]
-        self.api_url = f'{self.config.sandbox.local_runtime_url}:{self._container_port}'
+        self.api_url = f'http://192.168.88.11:{self._container_port}'
 
         use_host_network = self.config.sandbox.use_host_network
         network_mode: str | None = 'host' if use_host_network else None
