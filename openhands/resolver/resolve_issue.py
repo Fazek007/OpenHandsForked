@@ -220,10 +220,10 @@ async def process_issue(
         sandbox=sandbox_config,
         # https://github.com/Fazek007/OpenHandsForked/blob/029f8e11fd326b06349bde9aaa5e1d8ecfb3f4e6/openhands/runtime/utils/command.py#L37 if resolve_issue.py runs in container as root, the user_id become 0 unless we set it to False
         run_as_openhands = False,
-        workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
         # do not mount workspace
         workspace_base=workspace_base,
         workspace_mount_path=workspace_base,
+        workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
     )
     config.set_llm_config(llm_config)
