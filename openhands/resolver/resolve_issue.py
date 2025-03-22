@@ -223,7 +223,8 @@ async def process_issue(
         # do not mount workspace
         workspace_base=workspace_base,
         workspace_mount_path=workspace_base,
-        workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
+        #workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
+        workspace_mount_rewrite = "/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands:/app",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
     )
     config.set_llm_config(llm_config)
