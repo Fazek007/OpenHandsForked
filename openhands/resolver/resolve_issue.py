@@ -118,36 +118,6 @@ async def complete_runtime(
     obs = runtime.run_action(action)
     logger.info(obs, extra={'msg_type': 'OBSERVATION'})
 
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-
-    action = CmdRunAction(command='sleep 25')
-    logger.info(action, extra={'msg_type': 'ACTION'})
-    obs = runtime.run_action(action)
-    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
-    
     action = CmdRunAction(command='cd /workspace')
     logger.info(action, extra={'msg_type': 'ACTION'})
     obs = runtime.run_action(action)
@@ -277,16 +247,11 @@ async def process_issue(
         run_as_openhands = False,
         # do not mount workspace
         workspace_base=workspace_base,
-        logger.info(f"workspace_base: {workspace_base}")
         workspace_mount_path=workspace_base,
         workspace_mount_path_in_sandbox="test/workspace",
         #workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
         workspace_mount_rewrite = f"{workspace_base}:/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
-        logger.info(f"workspace_base: {workspace_base}"),
-        logger.info(f"workspace_mount_path: {workspace_mount_path}"),
-        logger.info(f"workspace_mount_path_in_sandbox: {workspace_mount_path_in_sandbox}"),
-        logger.info(f"workspace_mount_rewrite: {workspace_mount_rewrite}")
     )
 
     logger.info(f"workspace_base: {workspace_base}")
