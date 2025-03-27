@@ -98,6 +98,16 @@ async def complete_runtime(
     logger.info('-' * 30)
     obs: Observation
 
+    action = CmdRunAction(command='pwd')
+    logger.info(action, extra={'msg_type': 'ACTION'})
+    obs = runtime.run_action(action)
+    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
+
+    action = CmdRunAction(command='ls')
+    logger.info(action, extra={'msg_type': 'ACTION'})
+    obs = runtime.run_action(action)
+    logger.info(obs, extra={'msg_type': 'OBSERVATION'})
+    
     action = CmdRunAction(command='cd /workspace')
     logger.info(action, extra={'msg_type': 'ACTION'})
     obs = runtime.run_action(action)
@@ -224,7 +234,7 @@ async def process_issue(
         workspace_base=workspace_base,
         workspace_mount_path=workspace_base,
         #workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
-        workspace_mount_rewrite = "/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands:/app",
+        #workspace_mount_rewrite = "/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands:/app",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
     )
     config.set_llm_config(llm_config)
