@@ -273,7 +273,7 @@ async def process_issue(
         # do not mount workspace
         workspace_base=workspace_base,
         workspace_mount_path=workspace_base,
-        workspace_mount_path_in_sandbox="test/workspace",
+        workspace_mount_path_in_sandbox="/test/workspace",
         #workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
         #workspace_mount_rewrite = f"{workspace_base}:/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
