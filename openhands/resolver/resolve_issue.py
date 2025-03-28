@@ -244,10 +244,8 @@ async def process_issue(
         run_as_openhands = False,
         # do not mount workspace
         workspace_base="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
-        workspace_mount_path="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
-        workspace_mount_path_in_sandbox="b/workspace",
-        #workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
-        #workspace_mount_rewrite = f"{workspace_base}:/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        #workspace_mount_path="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
         agents={'CodeActAgent': AgentConfig(disabled_microagents=['github'])},
     )
 
