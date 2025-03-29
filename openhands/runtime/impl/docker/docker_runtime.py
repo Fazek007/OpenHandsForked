@@ -149,7 +149,8 @@ class DockerRuntime(ActionExecutionClient):
         if DEBUG_RUNTIME:
             self.log_streamer = LogStreamer(self.container, self.log)
         else:
-            self.log_streamer = None
+            self.log_streamer = LogStreamer(self.container, self.log)
+            #self.log_streamer = None temporarily changing this so because debug flag didnt work
 
         if not self.attach_to_existing:
             self.log('info', f'Waiting for client to become ready at {self.api_url}...')
