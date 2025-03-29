@@ -243,6 +243,14 @@ class DockerRuntime(ActionExecutionClient):
         environment.update(self.config.sandbox.runtime_startup_env_vars)
 
         self.log('info', f'Workspace Base: {self.config.workspace_base}')
+        
+        if self.config.workspace_mount_path:
+            self.log('info', f'workspace_mount_path: {self.config.workspace_mount_path}')
+        else:
+            self.log('info', f'workspace_mount_path is not set')
+        
+        self.log('info', f'workspace_mount_path_in_sandbox: {self.config.workspace_mount_path_in_sandbox}')
+        
         if (
             self.config.workspace_mount_path is not None
             and self.config.workspace_mount_path_in_sandbox is not None
