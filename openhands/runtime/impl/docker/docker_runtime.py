@@ -165,7 +165,7 @@ class DockerRuntime(ActionExecutionClient):
             await call_sync_from_async(self.setup_initial_env)
 
         self.log(
-            'debug',
+            'info',
             f'Container initialized with plugins: {[plugin.name for plugin in self.plugins]}. VSCode URL: {self.vscode_url}',
         )
         if not self.attach_to_existing:
@@ -184,7 +184,7 @@ class DockerRuntime(ActionExecutionClient):
             raise ex
 
     def _init_container(self):
-        self.log('debug', 'Preparing to start container...')
+        self.log('info', 'Preparing to start container...')
         self.send_status_message('STATUS$PREPARING_CONTAINER')
         self._host_port = self._find_available_port(EXECUTION_SERVER_PORT_RANGE)
         self._container_port = self._host_port
@@ -242,7 +242,7 @@ class DockerRuntime(ActionExecutionClient):
         # also update with runtime_startup_env_vars
         environment.update(self.config.sandbox.runtime_startup_env_vars)
 
-        self.log('debug', f'Workspace Base: {self.config.workspace_base}')
+        self.log('info', f'Workspace Base: {self.config.workspace_base}')
         if (
             self.config.workspace_mount_path is not None
             and self.config.workspace_mount_path_in_sandbox is not None
@@ -255,13 +255,17 @@ class DockerRuntime(ActionExecutionClient):
                 }
             }
             logger.debug(f'Mount dir: {self.config.workspace_mount_path}')
+            self.log(
+            'info',
+            f'Mount dir: {self.config.workspace_mount_path}',
+        )
         else:
             logger.debug(
                 'Mount dir is not set, will not mount the workspace directory to the container'
             )
             volumes = None
         self.log(
-            'debug',
+            'info',
             f'Sandbox workspace: {self.config.workspace_mount_path_in_sandbox}',
         )
 
