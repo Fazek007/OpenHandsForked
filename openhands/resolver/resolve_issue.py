@@ -222,7 +222,6 @@ async def process_issue(
         remote_runtime_api_url= 'http://192.168.88.11:8111',
         # large enough timeout, since some testcases take very long to run
         timeout=300,
-        selected_repo=Fazek007/habit-tracker,
     )
 
     if os.getenv('GITLAB_CI') == 'true':
