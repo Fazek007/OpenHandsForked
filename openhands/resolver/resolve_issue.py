@@ -243,9 +243,11 @@ async def process_issue(
         # https://github.com/Fazek007/OpenHandsForked/blob/029f8e11fd326b06349bde9aaa5e1d8ecfb3f4e6/openhands/runtime/utils/command.py#L37 if resolve_issue.py runs in container as root, the user_id become 0 unless we set it to False
         run_as_openhands = False,
         # do not mount workspace
-        workspace_base="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        #workspace_base="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        workspace_base= workspace_base,
         #these 2 values have to be provided or else the mounting doesnt happen
-        workspace_mount_path="/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        #workspace_mount_path="/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
+        workspace_mount_path=workspace_base,
         workspace_mount_path_in_sandbox="/workspace",
         #------
         workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
