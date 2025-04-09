@@ -246,8 +246,7 @@ async def process_issue(
         #workspace_base="/home/jovyan/work/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
         workspace_base= workspace_base,
         #these 2 values have to be provided or else the mounting doesnt happen
-        #workspace_mount_path="/mnt/nas/USERS/rigobence/EXPERIMENTS/openhands/output/workspace/issue_64",
-        workspace_mount_path=workspace_base,
+        workspace_mount_path=f"/mnt/nas/USERS/rigobence/openhands/output/workspace/{issue_handler.issue_type}_{issue.number}",
         workspace_mount_path_in_sandbox="/workspace",
         #------
         workspace_mount_rewrite = f"/home/jovyan/work/nas:/mnt/nas",
