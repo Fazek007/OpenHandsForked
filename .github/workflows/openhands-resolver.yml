@@ -90,8 +90,8 @@ jobs:
           OPENHANDS_VERSION=$(head -n 1 openhands_versions.txt | awk '{print $2}' | tr -d '()')
 
           # Create a new requirements.txt locally within the workflow, ensuring no reference to the repo's file
-          echo "openhands-ai==${OPENHANDS_VERSION}" > /tmp/requirements.txt
-          cat /tmp/requirements.txt
+          echo "openhands-ai==${OPENHANDS_VERSION}" > /home/jovyan/work/nas/USERS/rigobence/openhands/requirements.txt
+          cat /home/jovyan/work/nas/USERS/rigobence/openhands/requirements.txt
 
       - name: Cache pip dependencies
         if: |
@@ -109,9 +109,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.pythonLocation }}/lib/python3.12/site-packages/*
-          key: ${{ runner.os }}-pip-openhands-resolver-${{ hashFiles('/tmp/requirements.txt') }}
+          key: ${{ runner.os }}-pip-openhands-resolver-${{ hashFiles('/home/jovyan/work/nas/USERS/rigobence/openhands/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-openhands-resolver-${{ hashFiles('/tmp/requirements.txt') }}
+            ${{ runner.os }}-pip-openhands-resolver-${{ hashFiles('/home/jovyan/work/nas/USERS/rigobence/openhands/requirements.txt') }}
 
       - name: Check required environment variables
         env:
@@ -223,7 +223,7 @@ jobs:
             } else {
               console.log("Installing from requirements.txt...");
               await exec.exec("python -m pip install --upgrade pip");
-              await exec.exec("pip install -r /tmp/requirements.txt");
+              await exec.exec("pip install -r /home/jovyan/work/nas/USERS/rigobence/openhands/requirements.txt");
             }
 
       - name: Attempt to resolve issue
@@ -248,7 +248,7 @@ jobs:
       - name: Check resolution result
         id: check_result
         run: |
-          if cd /tmp && grep -q '"success":true' output/output.jsonl; then
+          if cd /home/jovyan/work/nas/USERS/rigobence/openhands && grep -q '"success":true' output/output.jsonl; then
             echo "RESOLUTION_SUCCESS=true" >> $GITHUB_OUTPUT
           else
             echo "RESOLUTION_SUCCESS=false" >> $GITHUB_OUTPUT
@@ -259,7 +259,7 @@ jobs:
         if: always() # Upload even if the previous steps fail
         with:
           name: resolver-output
-          path: /tmp/output/output.jsonl
+          path: /home/jovyan/work/nas/USERS/rigobence/openhands/output/output.jsonl
           retention-days: 30 # Keep the artifact for 30 days
 
       - name: Create draft PR or push branch
@@ -275,14 +275,14 @@ jobs:
           PYTHONPATH: ""
         run: |
           if [ "${{ steps.check_result.outputs.RESOLUTION_SUCCESS }}" == "true" ]; then
-            cd /tmp && python -m openhands.resolver.send_pull_request \
+            cd /home/jovyan/work/nas/USERS/rigobence/openhands && python -m openhands.resolver.send_pull_request \
               --issue-number ${{ env.ISSUE_NUMBER }} \
               --target-branch ${{ env.TARGET_BRANCH }} \
               --pr-type draft \
               --reviewer ${{ github.actor }} | tee pr_result.txt && \
               grep "draft created" pr_result.txt | sed 's/.*\///g' > pr_number.txt
           else
-            cd /tmp && python -m openhands.resolver.send_pull_request \
+            cd /home/jovyan/work/nas/USERS/rigobence/openhands && python -m openhands.resolver.send_pull_request \
               --issue-number ${{ env.ISSUE_NUMBER }} \
               --pr-type branch \
               --send-on-failure | tee branch_result.txt && \
@@ -304,7 +304,7 @@ jobs:
             let logContent = '';
 
             try {
-              logContent = fs.readFileSync('/tmp/pr_result.txt', 'utf8').trim();
+              logContent = fs.readFileSync('/home/jovyan/work/nas/USERS/rigobence/openhands/pr_result.txt', 'utf8').trim();
             } catch (error) {
               console.error('Error reading pr_result.txt file:', error);
             }
@@ -347,9 +347,9 @@ jobs:
 
             try {
               if (success) {
-                prNumber = fs.readFileSync('/tmp/pr_number.txt', 'utf8').trim();
+                prNumber = fs.readFileSync('/home/jovyan/work/nas/USERS/rigobence/openhands/pr_number.txt', 'utf8').trim();
               } else {
-                branchName = fs.readFileSync('/tmp/branch_name.txt', 'utf8').trim();
+                branchName = fs.readFileSync('/home/jovyan/work/nas/USERS/rigobence/openhands/branch_name.txt', 'utf8').trim();
               }
             } catch (error) {
               console.error('Error reading file:', error);
@@ -359,7 +359,7 @@ jobs:
             try {
               if (!success){
                 // Read result_explanation from JSON file for failed resolution
-                const outputFilePath = path.resolve('/tmp/output/output.jsonl');
+                const outputFilePath = path.resolve('/home/jovyan/work/nas/USERS/rigobence/openhands/output/output.jsonl');
                 if (fs.existsSync(outputFilePath)) {
                   const outputContent = fs.readFileSync(outputFilePath, 'utf8');
                   const jsonLines = outputContent.split('\n').filter(line => line.trim() !== '');
