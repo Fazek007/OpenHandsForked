@@ -463,17 +463,23 @@ async def resolve_issue(
 
     # checkout the repo
     repo_dir = os.path.join(output_dir, 'repo')
-    if not os.path.exists(repo_dir):
-        checkout_output = subprocess.check_output(
-            [
-                'git',
-                'clone',
-                issue_handler.get_clone_url(),
-                f'{output_dir}/repo',
-            ]
-        ).decode('utf-8')
-        if 'fatal' in checkout_output:
-            raise RuntimeError(f'Failed to clone repository: {checkout_output}')
+    
+    # making sure repo is up to date by deleting it, forcing a fresh clone
+    if os.path.exists(repo_dir):
+    shutil.rmtree(repo_dir)
+    
+    # Clone the repository
+    checkout_output = subprocess.check_output(
+        [
+            'git',
+            'clone',
+            issue_handler.get_clone_url(),
+            repo_dir,
+        ]
+    ).decode('utf-8')
+    
+    if 'fatal' in checkout_output:
+        raise RuntimeError(f'Failed to clone repository: {checkout_output}')
 
     # get the commit id of current repo for reproducibility
     base_commit = (
