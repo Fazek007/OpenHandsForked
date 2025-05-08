@@ -466,7 +466,7 @@ async def resolve_issue(
     
     # making sure repo is up to date by deleting it, forcing a fresh clone
     if os.path.exists(repo_dir):
-    shutil.rmtree(repo_dir)
+        shutil.rmtree(repo_dir)
     
     # Clone the repository
     checkout_output = subprocess.check_output(
